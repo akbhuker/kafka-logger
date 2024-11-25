@@ -35,12 +35,14 @@ const LoggerDashboard = () => {
   const [autoGenerate, setAutoGenerate] = useState(false);
   const [terminalInput, setTerminalInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
+
   const [filters, setFilters] = useState({
     services: new Set(services),
     levels: new Set(logLevels)
   });
   const [searchQuery, setSearchQuery] = useState('');
-  const { theme, setTheme } = useTheme();
 
   // Generate a random log entry
   const generateRandomLog = () => {
@@ -54,7 +56,7 @@ const LoggerDashboard = () => {
   const sendLog = async (logData) => {
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:3000/logs', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_REACT_APP_API_URL}/logs`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -98,7 +100,7 @@ const LoggerDashboard = () => {
         break;
       case 'generate':
         setAutoGenerate(prev => !prev);
-        toast.info(`Auto-generate ${!autoGenerate ? 'started' : 'stopped'}`);
+        toast.info(`Auto - generate ${!autoGenerate ? 'started' : 'stopped'}`);
         break;
       default:
         const [service, level, ...messageParts] = terminalInput.split(' ');
@@ -128,6 +130,7 @@ const LoggerDashboard = () => {
     return () => clearInterval(interval);
   }, [autoGenerate]);
 
+
   // Get log color based on level
   const getLogColor = (level) => {
     switch (level) {
@@ -153,7 +156,8 @@ const LoggerDashboard = () => {
                 size="icon"
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
               >
-                {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                <Sun className="h-5 w-5 absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                <Moon className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
               </Button>
             </div>
           </div>
@@ -234,7 +238,7 @@ const LoggerDashboard = () => {
                         <Badge variant="outline" className="ml-2 text-green-500">
                           {log.service}
                         </Badge>
-                        <Badge variant="outline" className={`ml-2 ${getLogColor(log.level)}`}>
+                        <Badge variant="outline" className={`ml - 2 ${getLogColor(log.level)} `}>
                           {log.level}
                         </Badge>
                         <span className="text-gray-300 ml-2">{log.message}</span>
