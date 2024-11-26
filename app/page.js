@@ -40,7 +40,7 @@ const LoggerDashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [socket, setSocket] = useState(null);
-  // const { theme, setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
 
   const [filters, setFilters] = useState({
     services: new Set(services),
@@ -190,7 +190,7 @@ const LoggerDashboard = () => {
                 <Terminal className="w-6 h-6" />
                 <CardTitle>Kafka Logger Dashboard</CardTitle>
               </div>
-              {/* <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-4">
                 <Button
                   variant="ghost"
                   size="icon"
@@ -199,7 +199,7 @@ const LoggerDashboard = () => {
                   <Sun className="h-5 w-5 absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                   <Moon className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                 </Button>
-              </div> */}
+              </div>
             </div>
           </CardHeader>
           <CardContent>
@@ -296,7 +296,7 @@ const LoggerDashboard = () => {
                       <Input
                         value={terminalInput}
                         onChange={(e) => setTerminalInput(e.target.value)}
-                        className="flex-1 bg-black"
+                        className="flex-1"
                         placeholder="service level message (or 'generate' to toggle auto-gen, 'clear' to reset)"
                         disabled={isLoading}
                       />
