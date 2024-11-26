@@ -137,7 +137,7 @@ const LoggerDashboard = () => {
 
   useEffect(() => {
     // Create socket connection
-    const newSocket = io(process.env.REACT_APP_SOCKET_URL || 'http://localhost:4000', {
+    const newSocket = io(process.env.NEXT_PUBLIC_REACT_APP_API_URL, {
       reconnection: true,
       reconnectionAttempts: 5,
       reconnectionDelay: 1000
